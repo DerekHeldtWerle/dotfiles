@@ -1,63 +1,58 @@
-add_newline = true
+#format = """
+#$username\
+#$hostname\
+#$shlvl\
+#$directory\
+#$git_branch\
+#$git_commit\
+#$git_state\
+#$git_status\
+#$hg_branch\
+#$docker_context\
+#$package\
+#$cmake\
+#$dart\
+#$dotnet\
+#$elixir\
+#$elm\
+#$erlang\
+#$golang\
+#$helm\
+#$java\
+#$julia\
+#$nim\
+#$nodejs\
+#$ocaml\
+#$perl\
+#$php\
+#$purescript\
+#$python\
+#$ruby\
+#$rust\
+#$swift\
+#$terraform\
+#$zig\
+#$nix_shell\
+#$kubernetes\
+#$conda\
+#$memory_usage\
+#$aws\
+#$gcloud\
+#$env_var\
+#$crystal\
+#$cmd_duration\
+#$custom\
+#$line_break\
+#$jobs\
+#$battery\
+#$time\
+#$status\
+#$character"""
 
-format = """\
-    $username\
-    $hostname\
-    $directory\
-    $kubernetes\
-    $git_branch\
-    $git_commit\
-    $git_status\
-    $hg_branch\
-    $docker_context\
-    $package\
-    $dotnet\
-    $elixir\
-    $elm\
-    $golang\
-    $haskell\
-    $java\
-    $julia\
-    $nodejs\
-    $php\
-    $python\
-    $ruby\
-    $rust\
-    $terraform\
-    $nix_shell\
-    $conda\
-    $memory_usage\
-    $aws\
-    $env_var\
-    $crystal\
-    $cmd_duration\
-    $custom\
-    $jobs\
-    $line_break\
-    $battery\
-    $time\
-    $character\
-    """
-
-[aws]
-style = "bold blue"
-displayed_items = "profile"
-
-[cmd_duration]
-min_time = 1000
-format = "$duration"
-
-[directory]
-fish_style_pwd_dir_length = 1
-truncation_length = 2
-truncate_to_repo = false
-style = "blue"
-
-[git_branch]
-format = "[$symbol$branch]($style)"
-
-[git_commit]
-format = "[\\($hash\\)]($style)"
+format = """
+[](bold green)
+[](bold green)$directory$git_branch$git_commit$git_state$git_status$kubernetes
+[└─>](bold green)$python """
 
 [git_status]
 ahead = "⇡${count}"
@@ -65,38 +60,36 @@ diverged = "⇕⇡${ahead_count}⇣${behind_count}"
 behind = "⇣${count}"
 format = "$ahead_behind "
 
-[golang]
-symbol = "go:"
-format = "[$symbol$version]($style) "
-style = "underline blue"
 
-[java]
-symbol = "java:"
-format = "[${symbol}${version}]($style) "
-style = "underline red"
-
-[python]
-symbol = "py:"
-format = "[${symbol}(\\($virtualenv\\))]($style) "
-pyenv_version_name = true
-
-[rust]
-symbol = "rs:"
-format = "[$symbol$version]($style) "
-style = "underline red"
-
-[nodejs]
-format= "[$symbol$version]($style) "
-
-[package]
-disabled = true
-
-[jobs]
-symbol = "+ "
-threshold = 0
+[character]
+success_symbol = "➜"
 
 [kubernetes]
-format = "[$symbol$context(\\($namespace\\))]($style) "
-symbol = "k8s:"
-style = "underline green"
+format = "on [⛵ $context \\($namespace\\)]($style) "
 disabled = false
+style = "red bold"
+
+[kubernetes.context_aliases]
+"dheldt.atgdeveast.k8s.local" = "dev/d"
+"atgdeveast.k8s.local" = "dev/a"
+"dheldt.atg.prod.k8s.local" = "prod/d"
+"atg.prod.k8s.local" = "prod/a"
+"eks-idb-dev" = "eks/dev"
+"eks-idb-prod" = "eks/prod"
+"eks-idb-preprod" = "eks/preprod"
+
+[directory]
+fish_style_pwd_dir_length = 1
+truncation_length = 9
+truncate_to_repo = false
+
+#[directory]
+#truncate_to_repo = false
+#truncation_length = 9
+
+[python]
+format = "[${symbol}${pyenv_prefix}${version}( \\($virtualenv\\))]($style) "
+
+[aws]
+style = "bold blue"
+displayed_items = "profile"
